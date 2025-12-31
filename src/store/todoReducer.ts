@@ -9,13 +9,8 @@ export type TodoState = {
 };
 
 export type TodoAction =
-  | { type: "ADD_TODO"; payload: { title: string; category: string; dueDate: string } }
-  | { type: "TOGGLE_TODO"; payload: { id: number } }
-  | { type: "REMOVE_TODO"; payload: { id: number } }
-  | { type: "UPDATE_TODO"; payload: { id: number; title: string; category: string; dueDate: string } }
-  | { type: "MOVE_TODO"; payload: { id: number; direction: "up" | "down" } }
-  | { type: "ADD_CATEGORY"; payload: { name: string; color: string } }
-  | { type: "REMOVE_CATEGORY"; payload: { name: string } }
+  | { type: "SET_TODOS"; payload: { todos: Todo[] } }
+  | { type: "SET_CATEGORIES"; payload: { categories: Category[] } }
   | { type: "SET_SORT"; payload: { sortBy: SortBy } }
   | { type: "SET_QUERY"; payload: { query: string } }
   | { type: "OPEN_CATEGORY_MODAL" }
@@ -31,6 +26,24 @@ export const initialState: TodoState = {
 
 export function todoReducer(state: TodoState, action: TodoAction): TodoState {
   switch (action.type) {
+    case "SET_TODOS":
+      return { ...state, todos: action.payload.todos };
+
+    case "SET_CATEGORIES":
+      return { ...state, categories: action.payload.categories };
+
+    case "SET_SORT":
+      return { ...state, sortBy: action.payload.sortBy };
+
+    case "SET_QUERY":
+      return { ...state, query: action.payload.query };
+
+    case "OPEN_CATEGORY_MODAL":
+      return { ...state, isCategoryModalOpen: true };
+
+    case "CLOSE_CATEGORY_MODAL":
+      return { ...state, isCategoryModalOpen: false };
+
     default:
       return state;
   }
