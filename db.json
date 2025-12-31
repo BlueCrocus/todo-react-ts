@@ -1,0 +1,6 @@
+{
+  "todos": [],
+  "categories": [
+    { "id": 1, "name": "미지정", "color": "#999" }
+  ]
+}
