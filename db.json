@@ -1,6 +1,19 @@
 {
-  "todos": [],
+  "todos": [
+    {
+      "id": 1,
+      "title": "JavaScript 복습",
+      "done": false,
+      "category": "미지정",
+      "dueDate": "2025-12-31",
+      "order": 1
+    }
+  ],
   "categories": [
-    { "id": 1, "name": "미지정", "color": "#999" }
+    {
+      "id": 1,
+      "name": "미지정",
+      "color": "#999"
+    }
   ]
 }

@@ -14,7 +14,8 @@ export type TodoAction =
   | { type: "SET_SORT"; payload: { sortBy: SortBy } }
   | { type: "SET_QUERY"; payload: { query: string } }
   | { type: "OPEN_CATEGORY_MODAL" }
-  | { type: "CLOSE_CATEGORY_MODAL" };
+  | { type: "CLOSE_CATEGORY_MODAL" }
+  | { type: "ADD_TODO"; payload: { todo: Todo } };
 
 export const initialState: TodoState = {
   todos: [],
@@ -43,6 +44,9 @@ export function todoReducer(state: TodoState, action: TodoAction): TodoState {
 
     case "CLOSE_CATEGORY_MODAL":
       return { ...state, isCategoryModalOpen: false };
+
+    case "ADD_TODO":
+      return { ...state, todos: [...state.todos, action.payload.todo] };
 
     default:
       return state;
