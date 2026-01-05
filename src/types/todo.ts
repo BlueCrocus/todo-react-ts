@@ -1,4 +1,9 @@
-export type Category = { name: string; color: string };
+export type Category = { 
+  id: string;
+  name: string; 
+  color: string 
+};
+
 export type CreateTodoDto = Omit<Todo, "id">;
 
 export type Todo = {
