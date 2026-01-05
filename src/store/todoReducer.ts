@@ -19,7 +19,7 @@ export type TodoAction =
 
 export const initialState: TodoState = {
   todos: [],
-  categories: [{ name: "미지정", color: "#999" }],
+  categories: [{id:"uncategorized", name: "미지정", color: "#999" }],
   sortBy: "manual",
   query: "",
   isCategoryModalOpen: false,
@@ -47,6 +47,13 @@ export function todoReducer(state: TodoState, action: TodoAction): TodoState {
 
     case "ADD_TODO":
       return { ...state, todos: [...state.todos, action.payload.todo] };
+
+    case "ADD_TODO": {
+      const next = [...state.todos, action.payload.todo].sort(
+        (a, b) => a.order - b.order
+      );
+      return { ...state, todos: next };
+    };
 
     default:
       return state;

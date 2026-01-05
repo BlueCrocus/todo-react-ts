@@ -7,26 +7,29 @@ export default function TodoForm() {
   const dispatch = useTodoDispatch();
 
   const [title, setTitle] = useState("");
-  const [category, setCategory] = useState(categories[0]?.name ?? "미지정");
+  const [categoryName, setCategoryName] = useState(categories[0]?.name ?? "미지정");
   const [dueDate, setDueDate] = useState("");
 
-  // ✅ 다음 order 계산: 현재 todos 중 max(order)+1
   const nextOrder = useMemo(() => {
     const max = todos.reduce((acc, t) => Math.max(acc, t.order ?? 0), 0);
     return max + 1;
   }, [todos]);
 
+  // ✅ name -> id 매핑
+  const selectedCategoryId = useMemo(() => {
+    const found = categories.find((c) => c.name === categoryName);
+    return found?.id ?? categories[0]?.id ?? "uncategorized";
+  }, [categories, categoryName]);
+
   async function onSubmit() {
     const trimmed = title.trim();
     if (!trimmed) return;
-
-    if (trimmed.length > 30) return; // 바닐라와 동일 제한 :contentReference[oaicite:1]{index=1}
+    if (trimmed.length > 30) return;
 
     const created = await createTodo({
       title: trimmed,
-      done: false,
-      category: category || "미지정",
-      dueDate,
+      categoryId: selectedCategoryId,       
+      dueDate: dueDate ? dueDate : null,
       order: nextOrder,
     });
 
@@ -47,12 +50,12 @@ export default function TodoForm() {
       />
 
       <select
-        value={category}
-        onChange={(e) => setCategory(e.target.value)}
+        value={categoryName}
+        onChange={(e) => setCategoryName(e.target.value)}
         style={{ width: 150, height: 40 }}
       >
         {categories.map((c) => (
-          <option key={c.name} value={c.name}>
+          <option key={c.id} value={c.name}>
             {c.name}
           </option>
         ))}
