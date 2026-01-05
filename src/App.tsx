@@ -26,7 +26,8 @@ export default function App() {
         dispatch({
           type: "SET_CATEGORIES",
           payload: {
-            categories: categoriesWithId.map(({ name, color }) => ({
+            categories: categoriesWithId.map(({ id, name, color }) => ({
+              id,
               name,
               color,
             })),
